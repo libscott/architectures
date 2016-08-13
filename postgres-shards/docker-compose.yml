@@ -1,0 +1,21 @@
+version: '2'
+services:
+  postgres-shards-master:
+    build: .
+    ports:
+        - "5432:5432"
+        - "9001:9001"
+    volumes:
+        - .:/code
+    command: /code/init.sh master
+  postgres-shards-slave:
+    links:
+    - postgres-shards-master
+    depends_on:
+    - postgres-shards-master
+    build: .
+    ports:
+    - "5431:5432"
+    volumes:
+        - .:/code
+    command: /code/init.sh slave
