@@ -12,6 +12,8 @@ mv /etc/postgresql /etc/postgresql.bak
 cp -r postgresql-$role /etc/postgresql
 chown -R postgres:postgres /etc/postgresql/*
 
+# Master role
+
 if [ $role == master ]; then
 
     echo "Create archive folder"
@@ -24,6 +26,7 @@ if [ $role == master ]; then
     echo '' | nc -l 9001
 fi
 
+# Slave role
 
 if [ $role == slave ]; then
     echo "Create .pgpass"
@@ -47,5 +50,14 @@ fi
 
 echo "Monitoring"
 cd /var/log
-tail -f postgresql/postgresql-9.5-main.log
+tail -f postgresql/postgresql-9.5-main.log &
+tailpid="$!"
+
+stop () {
+    /etc/init.d/postgresql stop
+    kill $tailpid
+}
+trap stop SIGTERM
+
+wait $tailpid
 
