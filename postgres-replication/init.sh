@@ -27,14 +27,14 @@ fi
 
 if [ $role == slave ]; then
     echo "Create .pgpass"
-	$P bash -c 'echo "postgres-shards-master:*:*:*:thepassword" > ~postgres/.pgpass && chmod 600 ~postgres/.pgpass'
+	$P bash -c 'echo "postgres-master:*:*:*:thepassword" > ~postgres/.pgpass && chmod 600 ~postgres/.pgpass'
 
 	echo "Waiting for master"
-	./wait-for-it.sh postgres-shards-master:9001 -s -t 0
+	./wait-for-it.sh postgres-master:9001 -s -t 0
 
     echo "Starting base backup as replicator"
     $P rm -rf $pgdata
-    $P pg_basebackup -h postgres-shards-master -D $pgdata -U replicator -v -X stream
+    $P pg_basebackup -h postgres-master -D $pgdata -U replicator -v -X stream
 
     echo "Write recovery.conf file"
 	cp /etc/postgresql/9.5/main/recovery.conf $pgdata/
