@@ -6,7 +6,7 @@ A (work in progress) collection of POC distributed data setups.
 
 A simple native Postgresql streaming replication using Docker Compose. Simply install [Docker Compose](https://docs.docker.com/compose/), and then `docker-compose up` will spawn a pair of Postgresql servers, running on top of Ubuntu, and in master / slave configuration.
 
-## Multi master column sharding using [Citus Data Community Edition]
+## Multi master column sharding using Citus Data
 
 In investigating a multi master table sharding strategy, [Citus Data Community Edition](https://www.citusdata.com/product) was identified as a good contender for a sharding / cluster manager due to:
 
