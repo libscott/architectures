@@ -24,7 +24,7 @@ The plan is to identify a business (domain) object that can be queried independe
             |           |     |           |     |           |   independent domain objects)
             +-----------+     +-----+-----+     +-----------+
                         |           |           |
-                        +-----------------------+
+                        +-----------+-----------+
                                     |
                               +-----+-----+
                               |           |                     Full copy slave for BI queries
